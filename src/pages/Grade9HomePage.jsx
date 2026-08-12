@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 
-import { auth } from "../firebase";
+import {
+  getStudentProgress,
+  checkUnitCompleted,
+  checkReviewCompleted,
+} from "../services/progressService";
 import Unit1Page from "./Unit1Page";
 import Unit2Page from "./Unit2Page";
 import Unit3Page from "./Unit3Page";
@@ -358,6 +362,39 @@ function Illustration({ type }) {
 
 export default function Grade9HomePage({ studentInformation }) {
   const [activePage, setActivePage] = useState("home");
+  const [progressList, setProgressList] = useState([]);
+
+const [loadingProgress, setLoadingProgress] = useState(true);
+useEffect(() => {
+
+  async function loadStudentProgress(){
+
+    try {
+
+      const data =
+        await getStudentProgress();
+
+      setProgressList(data);
+
+    } catch(error){
+
+      console.error(
+        "Cannot load progress:",
+        error
+      );
+
+    } finally {
+
+      setLoadingProgress(false);
+
+    }
+
+  }
+
+
+  loadStudentProgress();
+
+}, []);
 
   const handleSignOut = async () => {
     try {
@@ -391,6 +428,83 @@ export default function Grade9HomePage({ studentInformation }) {
     );
   }
 
+  // ===============================
+// KIỂM TRA HOÀN THÀNH UNIT
+// ===============================
+
+const unit1Completed =
+  checkUnitCompleted(
+    progressList,
+    "unit1"
+  );
+
+
+const unit2Completed =
+  checkUnitCompleted(
+    progressList,
+    "unit2"
+  );
+
+
+const unit3Completed =
+  checkUnitCompleted(
+    progressList,
+    "unit3"
+  );
+
+
+const review1Completed =
+  checkReviewCompleted(
+    progressList,
+    "review1"
+  );
+
+
+const unit4Completed =
+  checkUnitCompleted(
+    progressList,
+    "unit4"
+  );
+
+
+const unit5Completed =
+  checkUnitCompleted(
+    progressList,
+    "unit5"
+  );
+
+
+const unit6Completed =
+  checkUnitCompleted(
+    progressList,
+    "unit6"
+  );
+
+
+
+// ===============================
+// TRẠNG THÁI MỞ KHÓA
+// ===============================
+
+const unlockStatus = {
+
+  unit1: true,
+
+  unit2: unit1Completed,
+
+  unit3: unit2Completed,
+
+  review1: unit3Completed,
+
+  unit4: review1Completed,
+
+  unit5: unit4Completed,
+
+  unit6: unit5Completed,
+
+  review2: unit6Completed,
+
+};
   const learningItems = [
     {
       id: "unit1",
@@ -515,6 +629,11 @@ export default function Grade9HomePage({ studentInformation }) {
       accentShadow: "rgba(23,107,125,0.25)",
     },
   ];
+  const displayItems =
+  learningItems.map((item) => ({
+    ...item,
+    locked: !unlockStatus[item.id],
+  }));
 
   return (
     <main className="min-h-screen bg-[#F5F9DC] px-4 py-5 text-[#244B52] sm:px-6 lg:px-10">
@@ -617,7 +736,7 @@ export default function Grade9HomePage({ studentInformation }) {
           </div>
 
           <div className="mt-7 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {learningItems.map((item) => (
+            {displayItems.map((item) => (
               <article
                 key={item.id}
                 className="group overflow-hidden rounded-[30px] border-2 bg-[#FFFDF7] transition hover:-translate-y-1.5"
@@ -656,7 +775,7 @@ export default function Grade9HomePage({ studentInformation }) {
                         color: item.accentDark,
                       }}
                     >
-                      Ready
+                     {item.locked ? "🔒 Locked" : "✓ Ready"}
                     </span>
                   </div>
 
@@ -689,7 +808,21 @@ export default function Grade9HomePage({ studentInformation }) {
 
                   <button
                     type="button"
-                    onClick={() => setActivePage(item.id)}
+                    onClick={() => {
+
+  if(item.locked){
+
+    window.alert(
+      "🔒 Hãy hoàn thành bài trước để mở khóa!"
+    );
+
+    return;
+
+  }
+
+  setActivePage(item.id);
+
+}}
                     className="mt-5 w-full rounded-2xl px-5 py-3.5 text-center font-black text-white transition hover:-translate-y-0.5 hover:brightness-95"
                     style={{
                       backgroundColor: item.accent,
