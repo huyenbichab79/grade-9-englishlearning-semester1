@@ -76,8 +76,6 @@ export async function saveActivityProgress({
   );
 
 
-  const courseId = "english9-semester1";
-
 const courseId = "english9-semester1";
 
 const progressId = [
@@ -110,7 +108,6 @@ const progressId = [
         );
 
 
-      const courseId = "english9-semester1";
 
 const commonData = {
   uid: currentUser.uid,
