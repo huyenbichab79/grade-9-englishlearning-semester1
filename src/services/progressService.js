@@ -76,11 +76,16 @@ export async function saveActivityProgress({
   );
 
 
-  const progressId = [
-    currentUser.uid,
-    unitId,
-    activityId,
-  ].join("__");
+  const courseId = "english9-semester1";
+
+const courseId = "english9-semester1";
+
+const progressId = [
+  currentUser.uid,
+  courseId,
+  unitId,
+  activityId,
+].join("__");
 
 
   const progressReference = doc(
@@ -105,38 +110,27 @@ export async function saveActivityProgress({
         );
 
 
-      const commonData = {
+      const courseId = "english9-semester1";
 
-        uid: currentUser.uid,
+const commonData = {
+  uid: currentUser.uid,
+  fullName: profile.fullName,
+  classCode: profile.studentClass,
+  email: currentUser.email,
 
-        fullName:
-          profile.fullName || "",
+  // phân biệt khóa học
+  courseId,
+  gradeLevel: 9,
 
-        classCode:
-          profile.studentClass || "",
-
-        email:
-          currentUser.email,
-
-        unitId,
-
-        activityId,
-
-        activityType,
-
-        correctAnswers,
-
-        totalQuestions,
-
-        latestScore:
-          scorePercent,
-
-        completed: true,
-
-        lastStudiedAt:
-          serverTimestamp(),
-
-      };
+  unitId,
+  activityId,
+  activityType,
+  correctAnswers,
+  totalQuestions,
+  latestScore: scorePercent,
+  completed: true,
+  lastStudiedAt: serverTimestamp(),
+};
 
 
       if (progressSnapshot.exists()) {
