@@ -22,6 +22,7 @@ export async function saveActivityProgress({
   correctAnswers,
   totalQuestions,
 }) {
+  console.log("GRADE 9 PROGRESS SERVICE RUNNING");
   const currentUser = auth.currentUser;
 
   if (!currentUser) {

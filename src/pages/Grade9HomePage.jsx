@@ -372,9 +372,17 @@ useEffect(() => {
     try {
 
       const data =
-        await getStudentProgress();
+  await getStudentProgress();
 
-      setProgressList(data);
+
+const grade9Progress =
+  data.filter(
+    (item) =>
+      item.courseId === "english9-semester1"
+  );
+
+
+setProgressList(grade9Progress);
 
     } catch(error){
 
