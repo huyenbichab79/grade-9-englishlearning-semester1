@@ -90,7 +90,7 @@ function Unit2Page({
       description:
         "Review vocabulary, phrases, grammar, reading, and writing from Unit 2.",
       level: "Mixed levels",
-      activityType: "challenge",
+      activityType: "unit-challenge",
       Component: UnitChallenge2Page,
       reward: "+40 XP",
     }

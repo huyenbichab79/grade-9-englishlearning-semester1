@@ -90,7 +90,7 @@ function Unit6Page({
       description:
         "Review vocabulary, phrases, grammar, reading, and writing from Unit 6.",
       level: "Mixed levels",
-      activityType: "challenge",
+     activityType: "unit-challenge",
       Component: UnitChallenge6Page,
       reward: "+40 XP",
     }

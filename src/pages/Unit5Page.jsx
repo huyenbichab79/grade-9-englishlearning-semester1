@@ -90,7 +90,7 @@ function Unit5Page({
       description:
         "Review vocabulary, phrases, present perfect, reading, and writing from Unit 5.",
       level: "Mixed levels",
-      activityType: "challenge",
+      activityType: "unit-challenge",
       Component: UnitChallenge5Page,
       reward: "+40 XP",
     }

@@ -86,11 +86,11 @@ function Unit4Page({
       tabId: "challenge",
       number: "06",
       icon: "🏆",
-      title: "Unit Challenge",
+      atitle: "Unit Challenge",
       description:
         "Review vocabulary, phrases, grammar, reading, and writing from Unit 4.",
       level: "Mixed levels",
-      activityType: "challenge",
+      activityType: "unit-challenge",
       Component: UnitChallenge4Page,
       reward: "+40 XP",
     }

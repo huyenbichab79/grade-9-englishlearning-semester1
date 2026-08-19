@@ -373,7 +373,7 @@ useEffect(() => {
 
       const data =
   await getStudentProgress();
-
+console.log("ALL PROGRESS:", data);
 
 const grade9Progress =
   data.filter(
