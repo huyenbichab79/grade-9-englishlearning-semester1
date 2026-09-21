@@ -206,7 +206,7 @@ function Unit2Page({
 
   return (
     <main className="min-h-screen bg-[#F6F8FC] text-[#323B4C]">
-      <header className="sticky top-0 z-30 border-b border-[#70809F] bg-[#46546F] px-4 py-4 shadow-[0_10px_28px_rgba(50,61,82,0.24)] sm:px-6">
+      <header className="sticky top-0 z-30 border-b border-[#E7A45B] bg-[#C65A12] px-4 py-4 shadow-[0_10px_28px...]">
         <div className="mx-auto max-w-[1500px]">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
             <div className="flex items-center gap-4">
