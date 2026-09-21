@@ -476,7 +476,7 @@ function StudentStartPage({ onStart, onTeacher }) {
     <option value="9.1">Class 9.1</option>
     <option value="9.8">Class 9.8</option>
     <option value="9.10">Class 9.10</option>
-    
+    <option value="9.2">Class 9.10</option>
   </select>
 </div>
 

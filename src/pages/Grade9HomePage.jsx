@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+
+import ProgressOverview from "../components/home/ProgressOverview";
+import "../styles/home.css";
+
 
 import {
   getStudentProgress,
@@ -371,9 +376,9 @@ useEffect(() => {
 
     try {
 
-      const data =
-  await getStudentProgress();
-console.log("ALL PROGRESS:", data);
+      const data = await getStudentProgress();
+
+console.log("XYZ123 TEST FILE:", data);
 
 const grade9Progress =
   data.filter(
@@ -381,7 +386,14 @@ const grade9Progress =
       item.courseId === "english9-semester1"
   );
 
-
+console.log("ABC123 GRADE9 DATA:", grade9Progress);
+console.log(
+  "UNIT1 CHECK:",
+  checkUnitCompleted(
+    grade9Progress,
+    "unit1"
+  )
+);
 setProgressList(grade9Progress);
 
     } catch(error){
@@ -643,6 +655,76 @@ const unlockStatus = {
     locked: !unlockStatus[item.id],
   }));
 
+console.log("UNLOCK STATUS:", unlockStatus);
+
+console.log(
+  "DISPLAY UNIT STATUS:",
+  displayItems.map(item => ({
+    id: item.id,
+    title: item.title,
+    locked: item.locked
+  }))
+);
+// ===== TÍNH TIẾN TRÌNH HỌC TẬP LỚP 9 =====
+
+// Chỉ lấy các hoạt động đã hoàn thành
+const completedRecords = progressList.filter(
+  (item) => item.completed === true
+);
+
+// Tổng số hoạt động bắt buộc của khóa học:
+// 6 Units × 5 hoạt động = 30
+// 2 Reviews × 8 hoạt động = 16
+// Tổng = 46 hoạt động
+const TOTAL_REQUIRED_ACTIVITIES = 46;
+
+const overallProgress = Math.min(
+  100,
+  Math.round(
+    (completedRecords.length / TOTAL_REQUIRED_ACTIVITIES) * 100
+  )
+);
+
+// Hàm tính % theo từng kỹ năng
+const calculateSkillProgress = (activityTypes) => {
+  const completed = completedRecords.filter((item) =>
+    activityTypes.includes(item.activityType)
+  ).length;
+
+  const total = progressList.filter((item) =>
+    activityTypes.includes(item.activityType)
+  ).length;
+
+  return total > 0
+    ? Math.round((completed / total) * 100)
+    : 0;
+};
+
+const skillProgress = {
+  Vocabulary: calculateSkillProgress([
+    "vocabulary",
+    "vocabulary-context",
+    "phrases",
+    "phrasal-verbs",
+  ]),
+
+  Grammar: calculateSkillProgress([
+    "grammar",
+  ]),
+
+  Reading: calculateSkillProgress([
+    "reading",
+  ]),
+
+  Writing: calculateSkillProgress([
+    "writing",
+  ]),
+
+  Listening: calculateSkillProgress([
+    "listening",
+  ]),
+};
+
   return (
     <main className="min-h-screen bg-[#F5F9DC] px-4 py-5 text-[#244B52] sm:px-6 lg:px-10">
       <section className="mx-auto max-w-[1480px]">
@@ -726,7 +808,11 @@ const unlockStatus = {
             </div>
           </div>
         </header>
-
+<ProgressOverview
+  loading={loadingProgress}
+  overallProgress={overallProgress}
+  skillProgress={skillProgress}
+/>
         <section className="mt-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>

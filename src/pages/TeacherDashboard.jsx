@@ -214,7 +214,7 @@ const getStudentActivityProgress = (
           </h2>
 
           <p className="mt-2 text-[#66777D]">
-  Classes 9.1, 9.2, 9.3 and 9.4
+  Classes 9.1, 9.8, 9.10 and 9.2
 </p>
 
 {loadingStudents && (
@@ -232,7 +232,7 @@ const getStudentActivityProgress = (
 {!loadingStudents && !studentError && (
   <div className="mt-6">
     <div className="flex flex-wrap justify-center gap-3">
-      {["all", "9.1", "9.2", "9.3", "9.4"].map(
+      {["all", "9.1", "9.8", "9.10", "9.2"].map(
         (className) => (
           <button
             key={className}
